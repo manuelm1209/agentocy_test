@@ -2,3 +2,4 @@ sqlite3
 crewai
 crewai_tools
 streamlit
+pysqlite3-binary
