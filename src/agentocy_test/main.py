@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 import sys
-import sys
 import warnings
 import time
 import streamlit as st
 from datetime import datetime
 from crew import AgentocyTest
 
-__import__('pysqlite3')
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # from agentocy_test.crew import AgentocyTest
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")

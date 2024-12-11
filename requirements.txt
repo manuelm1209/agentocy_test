@@ -1,0 +1,4 @@
+sqlite3
+crewai
+crewai_tools
+streamlit
