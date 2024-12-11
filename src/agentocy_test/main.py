@@ -3,6 +3,7 @@ import sys
 import warnings
 import time
 import streamlit as st
+from datetime import datetime
 
 # from agentocy_test.crew import AgentocyTest
 from crew import AgentocyTest
@@ -14,14 +15,19 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
-def run():
+def run(company_name,topic,company_description,social_media_examples):
     """
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs'
+        "company_name" : company_name,
+        "topic": topic,
+        "company_description": company_description,
+        "social_media_examples": social_media_examples,
+        "current_year": datetime.now().year
     }
-    AgentocyTest().crew().kickoff(inputs=inputs)
+    crew_output = AgentocyTest().crew().kickoff(inputs=inputs)
+    return(crew_output)
 
 st.set_page_config(
     page_title="AI Agency",
@@ -30,6 +36,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     )
 
+if "crew_output" not in st.session_state:
+    st.session_state.crew_output = {}
+
 if "step" not in st.session_state:
     st.session_state.step = 1
 
@@ -37,9 +46,7 @@ if "step" not in st.session_state:
 if "form_values" not in st.session_state:
     st.session_state.form_values = {
         "company_name": "Netflix",
-        "linkedin_checkbox": True,
-        "instagram_checkbox": True,
-        "facebook_checkbox": True,
+        "topic": "Movies about Colombia",
         "blog_post_checkbox": True,
         "company_description": "Netflix is a global entertainment powerhouse, offering a vast library of movies, TV shows, documentaries, and original content available for streaming anytime, anywhere. With a commitment to providing diverse and engaging stories from around the world, Netflix has revolutionized how we experience entertainment. Whether you’re into thrilling dramas, heartwarming comedies, or binge-worthy series, Netflix delivers endless options for every taste, making it the go-to platform for on-demand entertainment.",
         "social_media_examples": """**LinkedIn post:**
@@ -61,19 +68,22 @@ if "form_values" not in st.session_state:
     }
     
 # Callbacks for session state management
-# def go_to_step2(company_name,linkedin_checkbox,instagram_checkbox,facebook_checkbox,blog_post_checkbox,company_description,social_media_examples):
+# def go_to_step2(company_name,blog_post_checkbox,company_description,social_media_examples):
 def go_to_step2():
     # Checking for the company_name field
     if not (st.session_state.form_values["company_name"]):
         st.warning("Please fill out the Company Name field")
+    # Checking for the topic field
+    if not (st.session_state.form_values["topic"]):
+        st.warning("Please fill out the Topic field")
     # Checking for at least one platform selected for content generation
-    elif not (st.session_state.form_values["linkedin_checkbox"] or st.session_state.form_values["instagram_checkbox"] or st.session_state.form_values["facebook_checkbox"] or st.session_state.form_values["blog_post_checkbox"]):
-        st.warning("Please select at least one platform")
     elif not (st.session_state.form_values["company_description"]):
         st.warning("Please fill out the Company Description")                              
     else:
         with st.spinner("Generating your content..."):
-            time.sleep(2)
+            crew_output = run(st.session_state.form_values["company_name"], st.session_state.form_values["topic"],st.session_state.form_values["company_description"],st.session_state.form_values["social_media_examples"])
+            st.session_state.crew_output = crew_output
+            # time.sleep(2)
             st.session_state.step = 2
             st.rerun()
     
@@ -88,16 +98,27 @@ def main():
     if st.session_state.step == 1:
         # Sidebar Section
         with st.sidebar:
+            st.text("Fill out your company information and submit it to generate the content.")
+            with st.expander("AI Agents and tasks:",expanded=False):
+                st.markdown('''
+                            ### Agents:
+                            - Lead Market Analyst.
+                            - Chief Data Strategist.
+                            - Creative Content Director.
+                            - Chief Content Officer.
+                            ### Tasks and tools:
+                            - Web search.
+                            - Web scrape.
+                            - Website RAG.
+                            - Analyze market data.
+                            - Create content.
+                            - Blog post creation.
+                            - Social Media post creation.
+                            - Quality assurance.
+                            ''')
             with st.form("Form"):
-                st.session_state.form_values["company_name"] = st.text_input("Company Name", placeholder="Netflix", value=st.session_state.form_values["company_name"], key="company_name")
-                st.markdown("#####")
-                
-                # Check boxs for selecting what to genarate.  
-                st.write("Which platforms would you like to generate content for? ")
-                st.session_state.form_values["linkedin_checkbox"] = st.checkbox("LinkedIn", value=st.session_state.form_values["linkedin_checkbox"], key="linkedin_checkbox")
-                st.session_state.form_values["instagram_checkbox"] = st.checkbox("Instagram", value=st.session_state.form_values["instagram_checkbox"], key="instagram_checkbox")
-                st.session_state.form_values["facebook_checkbox"] = st.checkbox("Facebook", value=st.session_state.form_values["facebook_checkbox"], key="facebook_checkbox")
-                st.session_state.form_values["blog_post_checkbox"] = st.checkbox("Blog Post", value=st.session_state.form_values["blog_post_checkbox"], key="blog_post_checkbox")
+                st.session_state.form_values["company_name"] = st.text_input("Company Name:", placeholder="Netflix", value=st.session_state.form_values["company_name"], key="company_name")
+                st.session_state.form_values["topic"] = st.text_input("Topic:", placeholder="Latest movies", value=st.session_state.form_values["topic"], key="topic")
                 st.markdown("#####")
                 
                 # Expander with the company description text input area.
@@ -114,7 +135,6 @@ def main():
                         value=st.session_state.form_values["social_media_examples"],
                     )
                 
-                
                 # Form Submit button
                 st.markdown("#####")
                 submit_button = st.form_submit_button()
@@ -122,46 +142,106 @@ def main():
                     go_to_step2()
                     
         # Main section
-        st.title("AI content generator")
-        st.write("Fill out your company information in the sidebar and submit it to generate the content.")
+        # Waiting List Call to action
+        with st.container(border=True):
+            st.markdown("### Join the Waiting List 🤞")
+            st.text("I’m excited to share a product I’m working on for solopreneurs and small businesses.\nMy goal is to create something truly helpful and valuable for your journey. Sign up to stay updated and be among the first to give it a try!")
+            st.link_button("Join the Waitlist", "https://agentocy.com/waiting-list/", type="primary")
+        st.markdown("######")
+        
+        st.markdown('''
+                    ## AI Assistants for Solopreneurs and small business
+                    
+Managing a small business or working as a solopreneur often means juggling many roles at once. This platform is here to lend a helping hand, offering tools to simplify tasks like creating content, drafting blog posts, and organizing ideas—all in one place.
+
+#### What You Can Expect:
+- More Time for What Matters: Automate routine tasks and free up your day.
+- Creative Support: Get fresh ideas and thoughtful suggestions to make your work easier.
+- Room to Grow: The platform will continue evolving to meet the needs of people like you.
+
+#### Why Join?
+
+This project is a work in progress, and I’m building it with your unique challenges in mind. By joining now, you’ll be part of its early stages and have the chance to shape its future. Let’s make running a small business or working solo a bit more manageable, together.
+                    ''')
+        
                     
                 
     # Step 2             
     if st.session_state.step == 2:
+        
+        # Waiting List Call to action
+        with st.container(border=True):
+            st.markdown("### Join the Waiting List 🤞")
+            st.text("I’m excited to share a product I’m working on for solopreneurs and small businesses.\nMy goal is to create something truly helpful and valuable for your journey. Sign up to stay updated and be among the first to give it a try!")
+            st.link_button("Join the Waitlist", "https://agentocy.com/waiting-list/", type="primary")
+        st.markdown("######")
+        
         # print(st.session_state.form_values)
         with st.sidebar:
-            st.markdown("## Info")
+            st.markdown("# Input Information:")
+            st.markdown("######")
             company_name_value = st.session_state.form_values["company_name"]
+            topic = st.session_state.form_values["topic"]
+            company_description = st.session_state.form_values["company_description"]
+            social_media_examples = st.session_state.form_values["social_media_examples"]
+            
             st.markdown(f"Company Name: {company_name_value}")
-            st.markdown("### Platforms:")
-            selected_items = {
-                "linkedin_checkbox": "LinkedIn",
-                "instagram_checkbox": "Instagram",
-                "facebook_checkbox": "Facebook",
-                "blog_post_checkbox": "Blog Post"
-            }
-            # Loop through only selected checkboxes
-            for key, value in selected_items.items():
-                if st.session_state.form_values[key]:  # Check if the checkbox is selected
-                    st.markdown(f"- {value}")
-            st.markdown("####")
+            st.markdown(f"Topic: {topic}")
+            with st.expander("Company Description"):
+                st.write(company_description)
+            with st.expander("Social media examples"):
+                st.text(social_media_examples)
   
             # Go back button
             st.button("Go back", on_click=go_to_step1)
         
         # Main Section
         # Display results in tabs
-        tab1, tab2, tab3, tab4 = st.tabs(
+        tab1, tab2 = st.tabs(
             [
-                "📊 LinkedIn",
-                "💼 Instagram",
-                "🎯 Facebook",
-                "💡 Blog Post",
+                "🐦 Social Media",
+                "📝 Blog Post",
             ]
         )
         
         with tab1:
-            st.subheader("LinkedIn:")
+            st.markdown("######")
+            
+            with st.container(border=True):
+                rows = [st.columns(2, vertical_alignment="top", gap="large"), st.columns(2, vertical_alignment="top", gap="large")]
+                columns = rows[0] + rows[1]
+                
+                # Iterate through the posts and assign each one to a column
+                for col, post in zip(columns, st.session_state.crew_output.pydantic.social_media_posts):
+                    with col:
+                        st.markdown("######")
+                        st.subheader(post.platform)
+                        
+                        # Stream generator
+                        def stream_data():
+                            for word in post.content.split(" "):
+                                yield word + " "
+                                time.sleep(0.02)
+                                
+                        st.write_stream(stream_data)  # Display the streamed post content     
+        
+                # for post in st.session_state.crew_output.pydantic.social_media_posts:
+
+                    
+                #     st.subheader(post.platform)
+                    
+                #     # Stream generator
+                #     def stream_data():
+                #         for word in post.content.split(" "):
+                #             yield word + " "
+                #             time.sleep(0.02)
+                            
+                #     st.write_stream(stream_data)
+                #     st.divider()
+            
+        with tab2:
+            st.markdown("######")
+            st.markdown(st.session_state.crew_output.pydantic.article)
 
 if __name__ == "__main__":
     main()

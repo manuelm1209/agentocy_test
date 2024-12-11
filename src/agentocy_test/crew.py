@@ -52,7 +52,7 @@ class AgentocyTest():
 	def content_creator_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['content_creator_agent'],
-			tools=[SerperDevTool(), WebsiteSearchTool()],
+			tools=[SerperDevTool(n_results=5), WebsiteSearchTool()],
 			verbose=True
 		)
   
@@ -67,9 +67,9 @@ class AgentocyTest():
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
 	@task
-	def monitor_financial_news(self) -> Task:
+	def monitor_news(self) -> Task:
 		return Task(
-			config=self.tasks_config['monitor_financial_news'],
+			config=self.tasks_config['monitor_news'],
 		)
 
 	@task

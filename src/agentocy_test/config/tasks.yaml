@@ -1,71 +1,55 @@
-monitor_financial_news:
+monitor_news:
   description: >
-    Monitor and analyze the latest news and updates related to
-    the financial markets, with a particular focus on {subject}.
+    - Monitor and analyze the latest news and updates for the on {topic}, with a particular focus on the company {company_name} focusing on the year {current_year}.
     Identify and summarize the most relevant and impactful news items
     that could influence market trends or investor decisions.
-    Utilize financial news APIs and real-time market data tools to
-    gather up-to-date information. Focus on detecting trends,
-    regulatory changes, or significant economic indicators that
-    directly relate to {subject}.
+    - Utilize news APIs and real-time market data tools to
+    gather up-to-date information. Focus on detecting trends, or significant indicators that directly relate to {topic}.
   expected_output: >
-    A detailed summary report highlighting the most impactful financial
-    news and updates related to {subject}. This report should include
-    key insights and their potential implications for the market and
-    content strategy.
+    A detailed summary report highlighting the most impactful news and updates related to {topic}. This report should include
+    key insights and their potential implications for the market and content strategy for {company_name}.
+    - For context, this is the Company Description for {company_name}: {company_description}.
   agent: market_news_monitor_agent
 
 analyze_market_data:
   description: >
-    Analyze market data and trends related to {subject}, with a focus
-    on uncovering patterns, opportunities, and risks that could be
-    leveraged in content creation. Use advanced data analytics tools
-    to process large datasets and generate actionable insights.
-    Pay special attention to how {subject} influences market movements,
-    investor sentiment, and economic indicators.
+    Analyze market data and trends related to {topic}, with a focus on uncovering patterns, opportunities, and risks that could be leveraged in content creation.
+    - Use advanced data analytics tools to process large datasets and generate actionable insights.
+    - Pay special attention to how {company_name} can get viral with engaging, enjoyable content to read and share.
+    - For context, this is the Company Description for {company_name}: {company_description}.
+
   expected_output: >
-    A comprehensive analysis report that highlights key market trends
-    and actionable insights related to {subject}. The report should
-    include data visualizations and clear recommendations for content
-    creation.
+    - A comprehensive analysis report that highlights key market trends and actionable insights related to {topic}.
+    - The report should include clear recommendations for content creation.
+    - For context, this is the Company Description for {company_name}: {company_description}.
   agent: data_analyst_agent
 
 create_content:
   description: >
-    Based on the insights provided by the Market News Monitor and
-    Data Analyst agents, create high-quality, engaging content that
-    educates and informs the target audience about {subject}.
-    Produce various types of content, including blog posts and
-    social media updates, that effectively communicate the insights
+    - Based on the insights provided by the Market News Monitor and Data Analyst agents, create high-quality, engaging content that educates and informs the target audience about {topic} for {company_name}.
+    - Produce various types of content, including blog posts and social media posts for Instagram, LinkedIn, Twitter,and Facebook that effectively communicate the insights
     gathered. Ensure the content clearly conveys the key findings
-    and recommendations related to {subject}. Incorporate data
-    visualizations, infographics, or other multimedia elements to
-    enhance the content where applicable.
+    and recommendations related to {topic} for {company_name}.
+    - The social media posts should have enough information by themselves and should not be only an invitation to visit the blog post but a place to get complete details about it.
+    - If any, here are some examples from previous social media posts from {company_name}, so try to adjust the tone and length of your output to this:  {social_media_examples}.
   expected_output: >
-    A collection of high-quality content pieces related to {subject},
-    including blog posts and social media updates, complete with
-    integrated multimedia elements.
+    A collection of high-quality content pieces related to {topic} for {company_name}, including Blog Posts and social media posts for Instagram, LinkedIn, Twitter,and Facebook.
   agent: content_creator_agent
   context:
-    - monitor_financial_news
+    - monitor_news
     - analyze_market_data
 
 quality_assurance:
   description: >
-    Review and refine the content created on {subject} to ensure it
-    meets the highest standards of accuracy, clarity, and brand
-    alignment. Thoroughly proofread and edit the content, checking
-    for errors, inconsistencies, and alignment with the brand voice.
-    Ensure that the content accurately reflects the key insights and
-    recommendations provided by the Data Analyst and Market News
-    Monitor agents. Ensure that the final content is well-formatted
-    in markdown, using appropriate headers, bullet points, links,
+    - Review and refine the content created on {topic} to ensure it meets the highest standards of accuracy, clarity, and brand alignment for {company_name} and the following company description: {company_description}.
+    - Thoroughly proofread and edit the content, checking for errors, inconsistencies, and alignment with the brand voice.
+    Ensure that the content accurately reflects the key insights and recommendations provided by the Data Analyst and Market News Monitor agents.
+    - Ensure that the final Blog Post content is well-formatted in markdown, using appropriate headers, bullet points, links,
     and other markdown features to enhance readability and engagement.
+    - Ensure the Social Media Posts are engaging and shareable with the right amount of emojis that reflect {company_name} brand.
   expected_output: >
-    A finalized set of content pieces related to {subject}, thoroughly
-    reviewed, and formatted in markdown. The content should be
-    well-structured, with appropriate use of headers, bullet points,
-    links, and other markdown features to ensure it is both visually
-    appealing and easy to read. Each section should have at least 2
-    paragraphs.
+    - A finalized set of content pieces related to {topic} for {company_name}, thoroughly reviewed, and formatted.
+    - The Blog Post should be well-structured, with appropriate use of headers, bullet points, links, and other markdown features to ensure it is both visually appealing and easy to read.
+    - The Social Media posts should have enough information by themselves about the Blog Post and should not be only an invitation to visit the blog post but a place to get complete details about it
+    - Each section of the Blog Post should have at least 3 paragraphs.
   agent: quality_assurance_agent
