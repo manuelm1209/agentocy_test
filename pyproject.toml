@@ -1,0 +1,21 @@
+[project]
+name = "agentocy_test"
+version = "0.1.0"
+description = "agentocy-test using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<=3.13"
+dependencies = [
+    "crewai[tools]>=0.86.0,<1.0.0",
+    "streamlit>=1.41.0",
+]
+
+[project.scripts]
+agentocy_test = "agentocy_test.main:run"
+run_crew = "agentocy_test.main:run"
+train = "agentocy_test.main:train"
+replay = "agentocy_test.main:replay"
+test = "agentocy_test.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
