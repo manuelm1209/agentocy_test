@@ -15,6 +15,10 @@ RUN git clone https://github.com/manuelm1209/agentocy_test.git .
 
 RUN pip install --upgrade pip
 
+RUN pip install poetry
+
+RUN poetry add pysqlite3-binary
+
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8501
