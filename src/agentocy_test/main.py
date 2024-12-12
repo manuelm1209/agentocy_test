@@ -8,6 +8,8 @@ from datetime import datetime
 
 from crew import AgentocyTest
 # from agentocy_test.crew import AgentocyTest
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
