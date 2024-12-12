@@ -1,6 +1,6 @@
 # app/Dockerfile
 
-FROM python:3.11-slim-bookworm
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     git \
     sqlite3 \
+    nano \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/manuelm1209/agentocy_test.git .
