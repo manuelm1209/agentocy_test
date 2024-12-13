@@ -40,20 +40,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     )
 
-components.html(
+st.markdown(
     """
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0X8PRHHV0"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0X8PRHHV0"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-X0X8PRHHV0');
-    </script>
-    """,
-    height=1,
-)
+        gtag('config', 'G-X0X8PRHHV0');
+        </script>
+    """, unsafe_allow_html=True)
 
 if "crew_output" not in st.session_state:
     st.session_state.crew_output = {}
