@@ -52,6 +52,7 @@ components.html(
     gtag('config', 'G-X0X8PRHHV0');
     </script>
     """,
+    height=1,
 )
 
 if "crew_output" not in st.session_state:
