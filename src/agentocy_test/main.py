@@ -4,12 +4,15 @@ import warnings
 import time
 import streamlit as st
 from datetime import datetime
+# For Google Analytics
+import streamlit.components.v1 as components
 
 
 from crew import AgentocyTest
 # from agentocy_test.crew import AgentocyTest
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
@@ -36,6 +39,20 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     )
+
+components.html(
+    """
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZCW85NEL2"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DZCW85NEL2');
+    </script>
+    """,
+)
 
 if "crew_output" not in st.session_state:
     st.session_state.crew_output = {}
@@ -81,6 +98,7 @@ def go_to_step2():
     elif not (st.session_state.form_values["company_description"]):
         st.warning("Please fill out the Company Description")                              
     else:
+        st.caption("It may take up to two minutes to complete.")
         with st.spinner("Generating your content..."):
             crew_output = run(st.session_state.form_values["company_name"], st.session_state.form_values["topic"],st.session_state.form_values["company_description"],st.session_state.form_values["social_media_examples"])
             st.session_state.crew_output = crew_output
