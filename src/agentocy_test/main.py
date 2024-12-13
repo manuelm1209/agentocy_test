@@ -162,27 +162,30 @@ def main():
                     go_to_step2()
                     
         # Main section
+        st.title("Social media and blog post AI content generator")
+        st.write("")
+        st.markdown("#")
         # Waiting List Call to action
         with st.container(border=True):
             st.markdown("### Join the Waiting List 🤞")
             st.text("I’m excited to share a product I’m working on for solopreneurs and small businesses.\nMy goal is to create something truly helpful and valuable for your journey. Sign up to stay updated and be among the first to give it a try!")
             st.link_button("Join the Waitlist", "https://agentocy.com/waiting-list/", type="primary")
         st.markdown("######")
-        
-        st.markdown('''
-                    ## AI Assistants for Solopreneurs and small business
-                    
-Managing a small business or working as a solopreneur often means juggling many roles at once. This platform is here to lend a helping hand, offering tools to simplify tasks like creating content, drafting blog posts, and organizing ideas—all in one place.
+        with st.container(border=True):
+            st.markdown('''
+                        ## AI Assistants for Solopreneurs and small business
+                        
+    Managing a small business or working as a solopreneur often means juggling many roles at once. This platform is here to lend a helping hand, offering tools to simplify tasks like creating content, drafting blog posts, and organizing ideas—all in one place.
 
-#### What You Can Expect:
-- More Time for What Matters: Automate routine tasks and free up your day.
-- Creative Support: Get fresh ideas and thoughtful suggestions to make your work easier.
-- Room to Grow: The platform will continue evolving to meet the needs of people like you.
+    #### What You Can Expect:
+    - More Time for What Matters: Automate routine tasks and free up your day.
+    - Creative Support: Get fresh ideas and thoughtful suggestions to make your work easier.
+    - Room to Grow: The platform will continue evolving to meet the needs of people like you.
 
-#### Why Join?
+    #### Why Join?
 
-This project is a work in progress, and I’m building it with your unique challenges in mind. By joining now, you’ll be part of its early stages and have the chance to shape its future. Let’s make running a small business or working solo a bit more manageable, together.
-                    ''')
+    This project is a work in progress, and I’m building it with your unique challenges in mind. By joining now, you’ll be part of its early stages and have the chance to shape its future. Let’s make running a small business or working solo a bit more manageable, together.
+                        ''')
         
                     
                 
